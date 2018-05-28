@@ -1,10 +1,13 @@
 $(document).ready(function() {
-	var testEditor = editormd("editormd", {
+	var editor = editormd("editormd", {
                     width   : "90%",
                     height  : 640,
                     syncScrolling : "single",
                     path    : "vendors/editormd/lib/",
-					tex  : true
+					tex  : true,
+					imageUpload    : true,
+					imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+					imageUploadURL : "/upload/fileUpload",
                 });
 
 	editormd.katexURL = {
