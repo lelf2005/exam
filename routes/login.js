@@ -17,7 +17,6 @@ router.post('/userLogin', function (req, res, next) {
     if (err) {
       console.error(err.message);
     }
-    console.log('Connected to the database.');
   });
 
   var sql = 'SELECT * FROM users WHERE username="' + uname + '"';
@@ -35,7 +34,6 @@ router.post('/userLogin', function (req, res, next) {
         var sql = "select password from users where username=?";
         db.get(sql,[uname], (err, row) => {
         if (err) {
-          console.log(err.message);
           result = {
             code: 400,
             msg: '查询失败'
@@ -43,7 +41,8 @@ router.post('/userLogin', function (req, res, next) {
           res.json(result);
         } else {
             var temp = row.password;  
-            console.log(temp);
+            req.session.username = uname;
+            console.log("session:"+req.session.username);
             if (temp == password) {
               result = {
                 code: 200,
@@ -65,7 +64,6 @@ router.post('/userLogin', function (req, res, next) {
   });
   db.close((err) => {
     if (err) {
-      console.error(err.message);
     }
     console.log('Close the database connection.');
   });
