@@ -4,6 +4,8 @@ var config = require('../config/config');
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var filebuffer = fs.readFileSync(config.db_path);
+var moment = require('moment');
+
 
 /* GET home page. */
 
@@ -42,7 +44,7 @@ router.post('/qadd*', function (req, res, next) {
     var question = req.body.question;
     var answer = req.body.answer;
     var solution = req.body.solution;
-    var curdate = new Date();
+    var curdate = moment().format('YYYY-MM-DD HH:mm:ss');
     
     var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
         if (err) {
