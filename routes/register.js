@@ -36,7 +36,7 @@ router.post('/userRegister', function (req, res, next) {
       };
       res.json(result);
     } else {
-      db.run(`INSERT INTO users (username, password,name,email) VALUES(?,?,?,?)`, [uname, password, name, email], function (err) {
+      db.run('INSERT INTO users (username, password,name,email) VALUES(?,?,?,?)', [uname, password, name, email], function (err) {
         if (err) {
           console.log(err.message);
           result = {
