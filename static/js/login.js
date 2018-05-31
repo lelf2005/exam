@@ -21,7 +21,6 @@ $(document).ready(function () {
         success: function (data, textStatus) {
           var dataJson = eval("(" + data + ")");
           if (dataJson.code == 200) {
-            alert("登录成功");
             window.location.href = "/";
           } else if (dataJson.code == 300) {
             msg.html("账号不存在，请重新输入！");

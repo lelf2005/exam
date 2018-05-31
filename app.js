@@ -11,6 +11,7 @@ var login = require('./routes/login');
 var register = require('./routes/register');
 var upload = require('./routes/uploadfile');
 var qlist = require('./routes/qlist');
+var session_chk = require('./routes/session_check');
 
 
 var app = express();
@@ -29,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret:'ilovehuhu',
   cookie:{
-    maxAge:30*1000
+    maxAge:30*60*1000
   },
   resave:true,
   saveUninitialized: false
@@ -43,6 +44,7 @@ app.use('/login', login);
 app.use('/register', register);
 app.use('/upload', upload);
 app.use('/qlist', qlist);
+app.use('/session', session_chk);
 
 app.use(express.static(path.join(__dirname, 'static')));
 

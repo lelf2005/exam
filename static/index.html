@@ -1,104 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
-    <meta name="author" content="Łukasz Holeczek">
-    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-    <title>Exam system for Huhu</title>
 
-	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="author" content="lelf">
+  <meta name="keyword" content="exam system for huhu">
+  <title>Exam system for Huhu</title>
 
-    <!-- Icons-->
-    <link href="vendors/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
-    <link href="vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
-    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-    <!-- Main styles for this application-->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
-  </head>
-  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-    <header class="app-header navbar">
-      <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <img class="navbar-brand-full" src="img/brand/logo.png" width="89" height="25" alt="CoreUI Logo">
-        <img class="navbar-brand-minimized" src="img/brand/logo.png" width="30" height="30" alt="CoreUI Logo">
-      </a>
-      <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <ul class="nav navbar-nav d-md-down-none">
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav ml-auto">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <link href="vendors/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
+  <link href="vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+  <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+  <!-- Main styles for this application-->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+</head>
 
-      </ul>
-      
-    </header>
-    <div class="app-body">
-      <div class="sidebar">
-        <nav class="sidebar-nav">
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="questions_list.html">
-                <i class="nav-icon icon-speedometer"></i> 题目列表
-              </a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link" href="editor.html">
-                <i class="nav-icon icon-speedometer"></i> Editor
-              </a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link" href="discrepancy.html">
-                <i class="nav-icon icon-speedometer"></i> Discrepancy
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="upload.html">
-                <i class="nav-icon icon-speedometer"></i> Upload
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
-      </div>
-      <main class="main">
-        
-        <div class="container-fluid">
-          <div id="ui-view"></div>
-        </div>
-      </main>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+  <header class="app-header navbar">
+    <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+      <img class="navbar-brand-full" src="img/brand/logo.png" width="89" height="25" alt="CoreUI Logo">
+      <img class="navbar-brand-minimized" src="img/brand/logo.png" width="30" height="30" alt="CoreUI Logo">
+    </a>
+    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="nav navbar-nav d-md-down-none">
+      <li class="nav-item px-3">
+      </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto">
+
+    </ul>
+
+  </header>
+  <div class="app-body">
+    <div class="sidebar">
+      <nav class="sidebar-nav">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="questions_list.html">
+              <i class="nav-icon icon-speedometer"></i> 题目列表
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="editor.html">
+              <i class="nav-icon icon-speedometer"></i> Editor
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="discrepancy.html">
+              <i class="nav-icon icon-speedometer"></i> Discrepancy
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="upload.html">
+              <i class="nav-icon icon-speedometer"></i> Upload
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     </div>
-    <footer class="app-footer">
-      <div>
-        <span>&copy; 2018 </span>
+    <main class="main">
+
+      <div class="container-fluid">
+        <div id="ui-view"></div>
       </div>
-      <div class="ml-auto">
-        <span>Powered by</span>
-      </div>
-    </footer>
-    <!-- Bootstrap and necessary plugins-->
-    <script src="vendors/jquery/js/jquery.min.js"></script>
-    <script src="vendors/popper.js/js/popper.min.js"></script>
-    <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendors/pace-progress/js/pace.min.js"></script>
-    <script src="vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
-    <script src="vendors/@coreui/coreui/js/coreui.js"></script>
-	<script src="js/jquery.timeago.js"></script>
-    <script>
-      $('#ui-view').ajaxLoad();
-      $(document).ajaxComplete(function() {
-        Pace.restart()
-      });
-    </script>
-  </body>
+    </main>
+  </div>
+  <footer class="app-footer">
+    <div>
+      <span>&copy; 2018 </span>
+    </div>
+    <div class="ml-auto">
+      <span>Powered by lelf</span>
+    </div>
+  </footer>
+  <!-- Bootstrap and necessary plugins-->
+  <script src="vendors/jquery/js/jquery.min.js"></script>
+  <script src="vendors/popper.js/js/popper.min.js"></script>
+  <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendors/pace-progress/js/pace.min.js"></script>
+  <script src="vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
+  <script src="vendors/@coreui/coreui/js/coreui.js"></script>
+  <script src="js/session.js"></script>
+  <script>
+    $('#ui-view').ajaxLoad();
+    $(document).ajaxComplete(function () {
+      //session_check();
+      Pace.restart();
+    });
+
+
+  </script>
+</body>
+
 </html>

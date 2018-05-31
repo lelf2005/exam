@@ -7,10 +7,8 @@ var filebuffer = fs.readFileSync(config.db_path);
 var moment = require('moment');
 
 
-/* GET home page. */
-
 router.post('/qlist*', function (req, res, next) {
-    
+
     var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
         if (err) {
             console.error(err.message);
@@ -25,7 +23,7 @@ router.post('/qlist*', function (req, res, next) {
             throw err;
         }
 
-        res.json({"data":rows});
+        res.json({ "data": rows });
     });
 
 
@@ -38,14 +36,21 @@ router.post('/qlist*', function (req, res, next) {
 });
 
 router.post('/qadd*', function (req, res, next) {
-
+    if (!req.session.username) {
+        result = {
+            code: 400,
+            msg: '登录超时'
+        };
+        res.json(result);
+        return;
+    }
     var qtype = req.body.qtype;
     var qrank = req.body.qrank;
     var question = req.body.question;
     var answer = req.body.answer;
     var solution = req.body.solution;
     var curdate = moment().format('YYYY-MM-DD HH:mm:ss');
-    
+
     var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
         if (err) {
             console.error(err.message);
@@ -55,23 +60,165 @@ router.post('/qadd*', function (req, res, next) {
 
     var sql = 'INSERT INTO questions (item, answer,solution,rank,type,created_by,created_time,updated_by,updated_time) VALUES(?,?,?,?,?,?,?,?,?)';
 
-    db.run(sql, [question,answer,solution,qrank,qtype,req.session.username,curdate,req.session.username,curdate], function (err)  {
+    db.run(sql, [question, answer, solution, qrank, qtype, req.session.username, curdate, req.session.username, curdate], function (err) {
         if (err) {
-          result = {
-            code: 400,
-            msg: '添加失败'
-          };
-          res.json(result);
+            result = {
+                code: 400,
+                msg: '添加失败'
+            };
+            res.json(result);
             throw err;
-        }else{
+        } else {
             result = {
                 code: 200,
                 msg: '添加成功'
-              };
-              res.json(result);
+            };
+            res.json(result);
         }
-        
+    });
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+    });
 
+});
+
+router.post('/qupdate*', function (req, res, next) {
+    if (!req.session.username) {
+        result = {
+            code: 400,
+            msg: '登录超时'
+        };
+        res.json(result);
+        return;
+    }
+    var qid = req.body.qid;
+    var qtype = req.body.qtype;
+    var qrank = req.body.qrank;
+    var question = req.body.question;
+    var answer = req.body.answer;
+    var solution = req.body.solution;
+    var curdate = moment().format('YYYY-MM-DD HH:mm:ss');
+
+    var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Connected to the database.');
+    });
+
+    var sql = 'update questions set item = ?,answer=?,solution=?,rank=?,type=?,updated_by=?,updated_time=? where id=?'
+
+    db.run(sql, [question, answer, solution, qrank, qtype, req.session.username, curdate,qid], function (err) {
+        if (err) {
+            result = {
+                code: 400,
+                msg: '添加失败'
+            };
+            res.json(result);
+            throw err;
+        } else {
+            result = {
+                code: 200,
+                msg: '添加成功'
+            };
+            res.json(result);
+        }
+    });
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+    });
+
+});
+
+router.post('/qdel*', function (req, res, next) {
+    if (!req.session.username) {
+        result = {
+            code: 400,
+            msg: '登录超时'
+        };
+        res.json(result);
+        return;
+    }
+    var qid = req.body.qid;
+    var curdate = moment().format('YYYY-MM-DD HH:mm:ss');
+
+    var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Connected to the database.');
+    });
+
+    var sql = 'update questions set isdel = 1 where id=?';
+
+    db.run(sql, [qid], function (err) {
+        if (err) {
+            result = {
+                code: 400,
+                msg: '删除失败'
+            };
+            res.json(result);
+            throw err;
+        } else {
+            result = {
+                code: 200,
+                msg: '删除成功'
+            };
+            res.json(result);
+        }
+    });
+
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+    });
+});
+
+router.post('/qinfo*', function (req, res, next) {
+    if (!req.session.username) {
+        result = {
+            code: 400,
+            msg: '登录超时'
+        };
+        res.json(result);
+        return;
+    }
+    var qid = req.body.qid;
+
+    var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Connected to the database.');
+    });
+
+    var sql = 'SELECT * FROM questions where isdel=0 and id=?';
+
+    db.get(sql, [qid], (err, row) => {
+        if (err) {
+            result = {
+                code: 400,
+                msg: '查询失败'
+            };
+            res.json(result);
+        } else {
+            result = {
+                code: 200,
+                msg: '查询成功',
+                qtype: row.type,
+                qrank: row.rank,
+                item: row.item,
+                answer: row.answer,
+                solution: row.solution
+            };
+            res.json(result);
+        }
     });
 
 

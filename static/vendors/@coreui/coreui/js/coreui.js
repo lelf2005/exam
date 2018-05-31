@@ -63,7 +63,7 @@
       VIEW_SCRIPT: '.view-script'
     };
     var Default = {
-      defaultPage: '/exam/editor.html',
+      defaultPage: '/exam/questions_list.html',
       errorPage: '404.html',
       subpagesDirectory: 'views/'
     };
@@ -92,7 +92,7 @@
       _proto.loadPage = function loadPage(url) {
         var element = this._element;
         var config = this._config;
-		//hack for tm
+		//hack for exam
 		if(url.startsWith('/exam')){
 			url = url.substring(6); 
 		}

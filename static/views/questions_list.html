@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="vendors/editormd/css/editormd.min.css" />
+<link rel="stylesheet" href="css/dataTables.bootstrap4.min.css" />
 <script src="vendors/editormd/editormd.min.js"></script>
-<script src="js/editor.js"></script>
-<script src="js/datatables.min.js"></script>
+<script src="vendors/datatables.min.js"></script>
+<script src="vendors/DataTablesBS4.js"></script>
 <script src="js/questions.js"></script>
 
 
@@ -13,17 +14,16 @@
         <div class="card-header">
           <i class="fa fa-align-justify"></i> 题目列表
           <span class=" float-right">
-            <input type="text" id="global_filter" class="form-control" placeholder="搜索">
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#qadd" id="btn_qadd">
+              <i class="fa fa-dot-circle-o"></i> 添加</button>
           </span>
         </div>
         <div class="card-body">
-          <table class="table table-responsive-sm table-bordered table-striped table-sm" id="qlist">
-
+          <table class="table table-responsive-sm table-bordered table-striped table-sm compact no-footer" id="qlist" style="border-collapse: collapse !important">
           </table>
         </div>
         <div class="card-footer p-4">
-          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#qadd" id="btn_qadd">
-            <i class="fa fa-dot-circle-o"></i> 添加</button>
+         
         </div>
       </div>
     </div>
@@ -99,6 +99,29 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
         <button type="button" class="btn btn-primary" id="qsave">保存</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="confirmdel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">删除题目</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>点击确认删除题目!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-danger" id="qdel">确认</button>
       </div>
     </div>
     <!-- /.modal-content -->
