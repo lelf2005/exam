@@ -7,9 +7,6 @@ function session_check(){
         success: function (data, textStatus) {
             var dataJson = eval("(" + data + ")");
             if (dataJson.code == 200) {
-                alert(dataJson.username);
-            } else if (dataJson.code == 400) {
-                window.location.href = "/";
             } else {
                 window.location.href = "/";
             }

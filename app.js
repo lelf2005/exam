@@ -12,6 +12,7 @@ var register = require('./routes/register');
 var upload = require('./routes/uploadfile');
 var qlist = require('./routes/qlist');
 var session_chk = require('./routes/session_check');
+var exam = require('./routes/exam');
 
 
 var app = express();
@@ -45,6 +46,7 @@ app.use('/register', register);
 app.use('/upload', upload);
 app.use('/qlist', qlist);
 app.use('/session', session_chk);
+app.use('/exam', exam);
 
 app.use(express.static(path.join(__dirname, 'static')));
 

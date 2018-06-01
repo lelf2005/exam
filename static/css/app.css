@@ -1,0 +1,6 @@
+table.dataTable tbody tr.selected {
+    background-color: #acbad4;
+}
+.reorder{
+    cursor: move;
+}

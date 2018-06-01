@@ -17,6 +17,7 @@
   <link href="vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
   <!-- Main styles for this application-->
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/app.css" rel="stylesheet">
   <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
 </head>
 
@@ -51,18 +52,23 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="exam_list.html">
+              <i class="nav-icon icon-speedometer"></i> 试卷列表
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="editor.html">
               <i class="nav-icon icon-speedometer"></i> Editor
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="discrepancy.html">
-              <i class="nav-icon icon-speedometer"></i> Discrepancy
+            <a class="nav-link" href="upload.html">
+              <i class="nav-icon icon-speedometer"></i> Upload
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="upload.html">
-              <i class="nav-icon icon-speedometer"></i> Upload
+            <a class="nav-link invisible" href="exam_save.html" id="exam_edit">
+              <i class="nav-icon icon-speedometer"></i> 试卷编辑
             </a>
           </li>
         </ul>
@@ -95,10 +101,12 @@
   <script>
     $('#ui-view').ajaxLoad();
     $(document).ajaxComplete(function () {
-      //session_check();
       Pace.restart();
     });
-
+    $('#ui-view').change(function () {
+      session_check();
+    });
+    session_check();
 
   </script>
 </body>

@@ -63,7 +63,7 @@
       VIEW_SCRIPT: '.view-script'
     };
     var Default = {
-      defaultPage: '/exam/questions_list.html',
+      defaultPage: '/questions_list.html',
       errorPage: '404.html',
       subpagesDirectory: 'views/'
     };
@@ -75,7 +75,7 @@
         this._config = this._getConfig(config);
         this._element = element;
         var url = location.hash.replace(/^#/, '');
-
+        
         if (url !== '') {
           this.setUpUrl(url);
         } else {
@@ -92,10 +92,8 @@
       _proto.loadPage = function loadPage(url) {
         var element = this._element;
         var config = this._config;
-		//hack for exam
-		if(url.startsWith('/exam')){
-			url = url.substring(6); 
-		}
+	
+    $$$1(element).change();//hack
 
         var loadScripts = function loadScripts(src, element) {
           if (element === void 0) {
@@ -180,7 +178,7 @@
         $$$1(document).on(Event.CLICK, Selector.NAV_LINK + "[href!=\"#\"]", function (event) {
           event.preventDefault();
           event.stopPropagation();
-			
+
           if (event.currentTarget.target === '_top') {
             _this.loadTop(event.currentTarget.href);
           } else if (event.currentTarget.target === '_blank') {
