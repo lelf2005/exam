@@ -34,19 +34,19 @@ $(document).ready(function () {
 
     $('#btn_examgen').click(function () {
         var data = exam_qlist.data();
-        var content="";
+        var content = "";
         data.sort(sortId);
-        data.each( function (d) {
-            content+=d.item+"\n";
-        } );
+        data.each(function (d) {
+            content += d.item + "\n";
+        });
         exam.setMarkdown(content);
     });
 
-    function sortId(a,b){  
-        return a.seq-b.seq;
-     }
+    function sortId(a, b) {
+        return a.seq - b.seq;
+    }
 
-     var qlist = $('#qlist').DataTable({
+    var qlist = $('#qlist').DataTable({
         "processing": false,
         "ajax": {
             "url": "/qlist/qlist",
@@ -85,48 +85,94 @@ $(document).ready(function () {
             }
         }
     });
-    
+
 
     qlist.on('click', '.btn_add', function (e) {
         var data = qlist.row($(this).closest('tr')).data();
-        data["seq"]=getnextseq();
-        exam_qlist.row.add( data ).draw();
+        data["seq"] = getnextseq();
+        exam_qlist.row.add(data).draw();
     });
 
-    function getnextseq(){
+    function getnextseq() {
         var data = exam_qlist.data();
         var maxseq = 1;
-        data.each( function (d) {
-            if(d.seq > maxseq){
-                maxseq=d.seq;
+        data.each(function (d) {
+            if (d.seq > maxseq) {
+                maxseq = d.seq;
             }
-        } );
-        return maxseq+1;
+        });
+        return maxseq + 1;
     }
 
     var exam = editormd("exam", {
-		width: "100%",
-		height: 200,
-		delay: 600,
-		autoHeight: true,
-		syncScrolling: "single",
-		watch: false,
-		placeholder: "type here",
-		path: "vendors/editormd/lib/",
-		tex: true,
-		imageUpload: true,
-		imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-		imageUploadURL: "/upload/fileUpload",
-		toolbarIcons: function () {
-			return ["undo", "redo", "image", "watch"]
-		}
-	});
+        width: "100%",
+        height: 200,
+        delay: 600,
+        autoHeight: true,
+        syncScrolling: "single",
+        watch: false,
+        placeholder: "type here",
+        path: "vendors/editormd/lib/",
+        tex: true,
+        imageUpload: true,
+        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL: "/upload/fileUpload",
+        toolbarIcons: function () {
+            return ["undo", "redo", "image", "watch"]
+        }
+    });
 
-	exam.katexURL = {
-		js: "js/katex.min",
-		css: "css/katex.min"
-	};
-    
+    exam.katexURL = {
+        js: "js/katex.min",
+        css: "css/katex.min"
+    };
+
+    $("#exam_save").on('click', function (e) {
+        var exam_name = $("#exam_name");
+        var data = exam_qlist.data();
+        var qids = "";
+        var exam_id = $("#exam_id");
+        data.each(function (d) {
+            qids += d.id + ",";
+        });
+        if (exam_name.val() == "" || exam.getMarkdown() == "") {
+            alert("有*字段不能为空！");
+        } else {
+            var post_url = "/exam/exam_add";
+            if (exam_id.val() != "") {
+                post_url = "/exam/exam_update";
+            }
+
+            $.ajax({
+                url: post_url,
+                data: {
+                    name: exam_name.val(),
+                    qids: qids,
+                    exam_id: exam_id.val(),
+                    content: exam.getMarkdown()
+                },
+                type: "POST",
+                timeout: 36000,
+                dataType: "text",
+                success: function (data, textStatus) {
+                    var dataJson = eval("(" + data + ")");
+                    if (dataJson.code == 200) {
+                        alert("保存成功");
+                        $("#qadd").modal('hide');
+                        qlist.ajax.reload();
+                    } else if (dataJson.code == 400) {
+                        alert("保存失败！" + dataJson.msg);
+                    } else {
+                        alert("保存出错！未知错误！");
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("error:" + textStatus);
+                }
+            });
+        }
+    });
+
 
 });
 
