@@ -27,18 +27,7 @@ $(document).ready(function () {
             }
         },
         { "orderable": false, "targets": 4 },
-        ],
-        createdRow: function (row, data, index) {
-            if (data["type"] == 1) {
-                $('td:eq(2)', row).html('填空');
-            } else if (data["type"] == 2) {
-                $('td:eq(2)', row).html('选择');
-            } else if (data["type"] == 3) {
-                $('td:eq(2)', row).html('判断');
-            } else if (data["type"] == 4) {
-                $('td:eq(2)', row).html('解答');
-            }
-        }
+        ]
     });
 
     var question = editormd("question", {

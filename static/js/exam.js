@@ -18,8 +18,8 @@ $(document).ready(function () {
         columnDefs: [{
             targets: 2,
             render: function (data, type, row, meta) {
-                var html = '<button type="button" class="btn btn-sm btn-outline-primary" onclick="setqid(' + row.id + ');" >修改</button>';
-                html += ' <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#confirmdel" onclick="setqid(' + row.id + ');">删除</button>';
+                var html = '<button type="button" class="btn btn-sm btn-outline-primary btn_update" >修改</button>';
+                html += ' <button type="button" class="btn btn-sm btn-outline-danger btn_del" data-toggle="modal" data-target="#confirmdel" >删除</button>';
                 return html;
             }
         },
@@ -32,6 +32,18 @@ $(document).ready(function () {
     var btn_examadd = $("#btn_examadd");
 
     btn_examadd.click(function () {
+        $("#exam_edit").click();
+        $("#exam_id").val("");
+    });
+
+    examlist.on('click', '.btn_del', function (e) {
+        var data = examlist.row($(this).closest('tr')).data();
+        $("#examid").val(data.id);
+    });
+
+    examlist.on('click', '.btn_update', function (e) {
+        var data = examlist.row($(this).closest('tr')).data();
+        $("#exam_id").val(data.id);
         $("#exam_edit").click();
     });
 
@@ -68,7 +80,3 @@ $(document).ready(function () {
         }
     });
 });
-
-function setqid(examid) {
-    $("#examid").val(examid);
-}

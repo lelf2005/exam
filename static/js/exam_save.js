@@ -4,19 +4,88 @@ $(document).ready(function () {
     var exam_qlist = $('#exam_qlist').DataTable({
         data: dataSet,
         autoWidth: false,
-        ordering: false,
+        ordering: true,
         columns: [
             { data: "seq", title: "序号", width: "5%", className: 'reorder' },
-            { data: "id", title: "编号", width: "5%" },
-            { data: "item", title: "内容", width: "80%" },
-            { data: "type", title: "类型", width: "5%" },
-            { data: "rank", title: "难度", width: "5%" }
+            { data: "id", title: "编号", width: "5%","orderable": false },
+            { data: "item", title: "内容", width: "80%","orderable": false },
+            { data: "type", title: "类型", width: "5%","orderable": false },
+            { data: "rank", title: "难度", width: "5%","orderable": false }
         ],
         rowReorder: {
             dataSrc: 'seq'
         },
 
     });
+
+    var exam = editormd("exam", {
+        width: "100%",
+        height: 200,
+        delay: 600,
+        autoHeight: true,
+        syncScrolling: "single",
+        watch: false,
+        placeholder: "type here",
+        path: "vendors/editormd/lib/",
+        tex: true,
+        imageUpload: true,
+        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL: "/upload/fileUpload",
+        toolbarIcons: function () {
+            return ["undo", "redo", "image", "watch"]
+        },
+        onload : function() {
+            getExamInfo(this);
+        }
+    });
+
+    exam.katexURL = {
+        js: "js/katex.min",
+        css: "css/katex.min"
+    };
+
+    var exam_id = $("#exam_id");
+    var exam_name = $("#exam_name");
+function getExamInfo(mdeditor){
+    if(exam_id.val() !=""){
+        var post_url = "/exam/exam_info";
+        $.ajax({
+            url: post_url,
+            data: {
+                exam_id: exam_id.val(),
+            },
+            type: "POST",
+            timeout: 36000,
+            dataType: "text",
+            success: function (data, textStatus) {
+                var dataJson = eval("(" + data + ")");
+                if (dataJson.code == 200) {
+                        exam_name.val(dataJson.name);
+                        mdeditor.setMarkdown(dataJson.content);
+                        var seqs = (dataJson.qids).split(",");
+                        for(var i=0;i<seqs.length;i++){
+                            for(var j=0;j<dataJson.data.length;j++){
+                                if(dataJson.data[j].id == seqs[i]){
+                                    dataJson.data[j]["seq"]= i+1;
+                                }
+                            }
+                        }
+                        exam_qlist.rows.add(dataJson.data);
+                        exam_qlist.draw();
+                        
+                } else if (dataJson.code == 400) {
+                    alert("查询失败！" + dataJson.msg);
+                } else {
+                    alert("查询出错！未知错误！");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("error:" + textStatus);
+            }
+        });
+}
+}
+    
 
     $('#exam_qlist tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
@@ -104,37 +173,19 @@ $(document).ready(function () {
         return maxseq + 1;
     }
 
-    var exam = editormd("exam", {
-        width: "100%",
-        height: 200,
-        delay: 600,
-        autoHeight: true,
-        syncScrolling: "single",
-        watch: false,
-        placeholder: "type here",
-        path: "vendors/editormd/lib/",
-        tex: true,
-        imageUpload: true,
-        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        imageUploadURL: "/upload/fileUpload",
-        toolbarIcons: function () {
-            return ["undo", "redo", "image", "watch"]
-        }
-    });
-
-    exam.katexURL = {
-        js: "js/katex.min",
-        css: "css/katex.min"
-    };
+    
 
     $("#exam_save").on('click', function (e) {
-        var exam_name = $("#exam_name");
+        
         var data = exam_qlist.data();
         var qids = "";
-        var exam_id = $("#exam_id");
+        
         data.each(function (d) {
             qids += d.id + ",";
         });
+        if(qids != ""){
+            qids=qids.substring(0,qids.length-1);
+        }
         if (exam_name.val() == "" || exam.getMarkdown() == "") {
             alert("有*字段不能为空！");
         } else {
@@ -157,9 +208,10 @@ $(document).ready(function () {
                 success: function (data, textStatus) {
                     var dataJson = eval("(" + data + ")");
                     if (dataJson.code == 200) {
+                        if(dataJson.exam_id>0){
+                            exam_id.val(dataJson.exam_id);
+                        }
                         alert("保存成功");
-                        $("#qadd").modal('hide');
-                        qlist.ajax.reload();
                     } else if (dataJson.code == 400) {
                         alert("保存失败！" + dataJson.msg);
                     } else {
