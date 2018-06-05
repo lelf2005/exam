@@ -21,8 +21,8 @@ $(document).ready(function () {
         columnDefs: [{
             targets: 4,
             render: function (data, type, row, meta) {
-                var html = '<button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#qadd" onclick="setqid(' + row.id + ');" >修改</button>';
-                html += ' <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#confirmdel" onclick="setqid(' + row.id + ');">删除</button>';
+                var html = '<button type="button" class="btn btn-sm btn-outline-primary btn_update" data-toggle="modal" data-target="#qadd">修改</button>';
+                html += ' <button type="button" class="btn btn-sm btn-outline-danger btn_del" data-toggle="modal" data-target="#confirmdel">删除</button>';
                 return html;
             }
         },
@@ -117,6 +117,16 @@ $(document).ready(function () {
         qid.val("");
     });
 
+    qlist.on('click', '.btn_del', function (e) {
+        var data = qlist.row($(this).closest('tr')).data();
+        $("#qid").val(data.id);
+    });
+
+    qlist.on('click', '.btn_update', function (e) {
+        var data = qlist.row($(this).closest('tr')).data();
+        $("#qid").val(data.id);
+    });
+
     qadd.on('show.bs.modal', function () {
         if (qid.val() == "") {
             qtype.val(1);
@@ -144,6 +154,7 @@ $(document).ready(function () {
                         answer.setMarkdown(dataJson.answer);
                         solution.setMarkdown(dataJson.solution);
                         var ret_tags = dataJson.tags;
+                        tag_select.val(null).trigger('change');
                         for(var i=0;i<ret_tags.tags.length;i++){
                             var option = new Option(ret_tags.tags[i].tag, ret_tags.tags[i].id, true, true);
                             tag_select.append(option);
@@ -254,6 +265,3 @@ $(document).ready(function () {
 
 
 });
-function setqid(q_id) {
-    $("#qid").val(q_id);
-}
