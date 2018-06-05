@@ -143,6 +143,12 @@ $(document).ready(function () {
                         question.setMarkdown(dataJson.item);
                         answer.setMarkdown(dataJson.answer);
                         solution.setMarkdown(dataJson.solution);
+                        var ret_tags = dataJson.tags;
+                        for(var i=0;i<ret_tags.tags.length;i++){
+                            var option = new Option(ret_tags.tags[i].tag, ret_tags.tags[i].id, true, true);
+                            tag_select.append(option);
+                        }
+                        tag_select.trigger('change');
                     } else if (dataJson.code == 400) {
                         alert("查询失败！" + dataJson.msg);
                     } else {
@@ -155,7 +161,6 @@ $(document).ready(function () {
             });
         }
     });
-    //question.setMarkdown("### hello");
 
     qsave.click(function () {
         if (qtype.val() == "" || qrank.val() == "" || question.getMarkdown() == "" || answer.getMarkdown() == "") {
@@ -164,6 +169,11 @@ $(document).ready(function () {
             var post_url = "/qlist/qadd";
             if (qid.val() != "") {
                 post_url = "/qlist/qupdate";
+            }
+            var selected_tags = $(".tags").select2('data');
+            var tags = "";
+            for (var i = 0; i < selected_tags.length; i++) {
+                tags = tags + "," + selected_tags[i]["text"];
             }
 
             $.ajax({
@@ -174,7 +184,8 @@ $(document).ready(function () {
                     qid: qid.val(),
                     question: question.getMarkdown(),
                     answer: answer.getMarkdown(),
-                    solution: solution.getMarkdown()
+                    solution: solution.getMarkdown(),
+                    tags: tags.substring(1, tags.length)
                 },
                 type: "POST",
                 timeout: 36000,
@@ -231,9 +242,18 @@ $(document).ready(function () {
         }
     });
 
+    var tag_select = $(".tags").select2({
+        tags: true,
+        width: "100%",
+        ajax: {
+            url: '/qlist/tags',
+            delay: 250,
+            dataType: 'json'
+        }
+    });
+
+
 });
-
-
 function setqid(q_id) {
     $("#qid").val(q_id);
 }

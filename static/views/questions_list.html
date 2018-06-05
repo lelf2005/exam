@@ -1,8 +1,10 @@
 <link rel="stylesheet" href="vendors/editormd/css/editormd.min.css" />
 <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="css/select2.min.css" />
 <script src="vendors/editormd/editormd.min.js"></script>
 <script src="vendors/datatables.min.js"></script>
 <script src="vendors/DataTablesBS4.js"></script>
+<script src="vendors/select2.min.js"></script>
 <script src="js/questions.js"></script>
 
 
@@ -41,7 +43,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
           <div class="form-group row">
             <div class="form-group col-sm-3">
               <div class="input-group">
@@ -92,10 +93,11 @@
           <div class="form-group" id="solution">
             <textarea class="form-control"></textarea>
           </div>
+              <select class="form-control tags" multiple="multiple" ></select>
           <input type="hidden" id="qid" name="qid" class="form-control" >
-        </form>
       </div>
       <div class="modal-footer">
+        
         <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
         <button type="button" class="btn btn-primary" id="qsave">保存</button>
       </div>

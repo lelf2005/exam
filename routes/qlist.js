@@ -49,6 +49,7 @@ router.post('/qadd*', function (req, res, next) {
     var question = req.body.question;
     var answer = req.body.answer;
     var solution = req.body.solution;
+    var tags = req.body.tags;
     var curdate = moment().format('YYYY-MM-DD HH:mm:ss');
 
     var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
@@ -69,6 +70,19 @@ router.post('/qadd*', function (req, res, next) {
             res.json(result);
             throw err;
         } else {
+            if (tags != "") {
+                var arr_tags = tags.split(",");
+                var placeholders = arr_tags.map((tag) => '(' + this.lastID + ',?)').join(',');
+                sql = 'INSERT INTO tags(qid,tag) VALUES ' + placeholders;
+
+                db.run(sql, arr_tags, function (err) {
+                    if (err) {
+                        console.error(err.message);
+                    }
+                    console.log(`Rows inserted ${this.changes}`);
+                });
+            }
+
             result = {
                 code: 200,
                 msg: '添加成功'
@@ -99,8 +113,8 @@ router.post('/qupdate*', function (req, res, next) {
     var question = req.body.question;
     var answer = req.body.answer;
     var solution = req.body.solution;
+    var tags = req.body.tags;
     var curdate = moment().format('YYYY-MM-DD HH:mm:ss');
-
     var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
         if (err) {
             console.error(err.message);
@@ -110,18 +124,33 @@ router.post('/qupdate*', function (req, res, next) {
 
     var sql = 'update questions set item = ?,answer=?,solution=?,rank=?,type=?,updated_by=?,updated_time=? where id=?'
 
-    db.run(sql, [question, answer, solution, qrank, qtype, req.session.username, curdate,qid], function (err) {
+    db.run(sql, [question, answer, solution, qrank, qtype, req.session.username, curdate, qid], function (err) {
         if (err) {
             result = {
                 code: 400,
-                msg: '添加失败'
+                msg: '修改失败'
             };
             res.json(result);
             throw err;
         } else {
+            db.run('delete from tags where qid=' + qid);
+            if (tags != "") {
+                var arr_tags = tags.split(",");
+                var placeholders = arr_tags.map((tag) => '(' + qid + ',?)').join(',');
+                sql = 'INSERT INTO tags(qid,tag) VALUES ' + placeholders;
+
+                db.run(sql, arr_tags, function (err) {
+                    if (err) {
+                        console.error(err.message);
+                    }
+                    console.log(`Rows inserted ${this.changes}`);
+                });
+            }
+
+
             result = {
                 code: 200,
-                msg: '添加成功'
+                msg: '修改成功'
             };
             res.json(result);
         }
@@ -164,6 +193,7 @@ router.post('/qdel*', function (req, res, next) {
             res.json(result);
             throw err;
         } else {
+            db.run('delete from tags where qid=' + qid);
             result = {
                 code: 200,
                 msg: '删除成功'
@@ -208,17 +238,62 @@ router.post('/qinfo*', function (req, res, next) {
             };
             res.json(result);
         } else {
-            result = {
-                code: 200,
-                msg: '查询成功',
-                qtype: row.type,
-                qrank: row.rank,
-                item: row.item,
-                answer: row.answer,
-                solution: row.solution
-            };
-            res.json(result);
+            //sql = 'SELECT group_concat( tag ) as tags FROM tags WHERE qid= ?';
+            sql = 'SELECT id,tag FROM tags WHERE qid= ?';
+            db.all(sql, [qid], (err, tags_row) => {
+                if (err) {
+                    result = {
+                        code: 400,
+                        msg: '查询失败'
+                    };
+                    res.json(result);
+                } else {
+                    result = {
+                        code: 200,
+                        msg: '查询成功',
+                        qtype: row.type,
+                        qrank: row.rank,
+                        item: row.item,
+                        answer: row.answer,
+                        solution: row.solution,
+                        tags:{ "tags": tags_row }
+                    };
+                    res.json(result);
+                }
+            });
+            
         }
+    });
+
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+    });
+
+});
+
+router.get('/tags*', function (req, res, next) {
+    var q = req.query.q;
+
+    var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Connected to the database.');
+    });
+
+    var sql = 'select id, tag as text from tags group by tag';
+    if (q != undefined) {
+        sql = 'select id, tag as text from tags where tag like "%' + q + '%" group by tag ';
+    }
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+
+        res.json({ "results": rows });
     });
 
 
