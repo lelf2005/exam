@@ -174,7 +174,7 @@ $(document).ready(function () {
     });
 
     qsave.click(function () {
-        if (qtype.val() == "" || qrank.val() == "" || question.getMarkdown() == "" || answer.getMarkdown() == "") {
+        if (qtype.val() == null || qrank.val() == "" || question.getMarkdown() == "" || answer.getMarkdown() == "") {
             alert("有*字段不能为空！");
         } else {
             var post_url = "/qlist/qadd";
