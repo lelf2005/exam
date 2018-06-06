@@ -1,5 +1,4 @@
 var config = {
-    db_path: 'db/exam.db',
-    pdf_path:'public/export'
+    db_path: 'db/exam.db'
 };
 module.exports = config;
