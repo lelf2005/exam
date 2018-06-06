@@ -16,7 +16,7 @@ router.post('/fileUpload', function (req, res, next) {
     var filename = '';
     form.keepExtensions = true;
     form.encoding = 'utf-8'
-    form.uploadDir = path.join(__dirname, '../static/upload');
+    form.uploadDir = path.join(__dirname, '../public/upload');
 
     
     

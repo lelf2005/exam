@@ -225,6 +225,15 @@ function getExamInfo(mdeditor){
         }
     });
 
+    $("#exam_pdf").on('click', function (e) {
+
+        if (exam_name.val() == "" || exam.getMarkdown() == "") {
+            alert("有*字段不能为空！");
+        } else {
+            console.log("todo");
+        }
+    });
+
 
 });
 

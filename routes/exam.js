@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('../config/config');
 var fs = require('fs');
+var markdownpdf = require("markdown-pdf");
 var sqlite3 = require('sqlite3').verbose();
 var filebuffer = fs.readFileSync(config.db_path);
 var moment = require('moment');

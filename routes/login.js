@@ -3,6 +3,9 @@ var router = express.Router();
 var config = require('../config/config');
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
+const crypto = require("crypto");
+const random = require("./../utils/random");
+const Base64 = require("./../utils/base64");
 var filebuffer = fs.readFileSync(config.db_path);
 
 /* GET home page. */
@@ -40,10 +43,16 @@ router.post('/userLogin', function (req, res, next) {
           };
           res.json(result);
         } else {
-            var temp = row.password;  
+            var temp = row.password; 
+            let base64Random = temp.substring(0,12);
+            let newPas = base64Random + password;
+            let md5 = crypto.createHash("md5");
+            let md5Pas = md5.update(newPas).digest("hex");
+            let base64 = new Base64();
+            let base64Md5 = base64.encode(md5Pas);
+            let lastPassword = base64Random + base64Md5;
             req.session.username = uname;
-            console.log("session:"+req.session.username);
-            if (temp == password) {
+            if (temp == lastPassword) {
               result = {
                 code: 200,
                 msg: '密码正确'
