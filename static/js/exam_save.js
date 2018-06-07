@@ -22,6 +22,7 @@ $(document).ready(function () {
         width: "100%",
         height: 200,
         delay: 600,
+        htmlDecode : true, 
         autoHeight: true,
         syncScrolling: "single",
         watch: false,
@@ -32,7 +33,7 @@ $(document).ready(function () {
         imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
         imageUploadURL: "/upload/fileUpload",
         toolbarIcons: function () {
-            return ["undo", "redo", "image", "watch"]
+            return ["undo", "redo", "image","datetime","html-entities", "watch"]
         },
         onload : function() {
             getExamInfo(this);
@@ -106,7 +107,7 @@ function getExamInfo(mdeditor){
         var content = "";
         data.sort(sortId);
         data.each(function (d) {
-            content += d.item + "\n";
+            content += d.seq+"."+d.item + "\n\n";
         });
         exam.setMarkdown(content);
     });
@@ -164,7 +165,7 @@ function getExamInfo(mdeditor){
 
     function getnextseq() {
         var data = exam_qlist.data();
-        var maxseq = 1;
+        var maxseq = 0;
         data.each(function (d) {
             if (d.seq > maxseq) {
                 maxseq = d.seq;
@@ -175,7 +176,7 @@ function getExamInfo(mdeditor){
 
     
 
-    $("#exam_save").on('click', function (e) {
+    $("#exam_save,#exam_save1").on('click', function (e) {
         
         var data = exam_qlist.data();
         var qids = "";
@@ -225,7 +226,7 @@ function getExamInfo(mdeditor){
         }
     });
 
-    $("#exam_preview").on('click', function (e) {
+    $("#exam_preview,#exam_preview1").on('click', function (e) {
 
         if (exam_name.val() == "" || exam.getMarkdown() == "") {
             alert("有*字段不能为空！");
