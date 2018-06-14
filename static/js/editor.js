@@ -21,8 +21,5 @@ $(document).ready(function () {
 		js: "js/katex.min",
 		css: "css/katex.min"
 	};
-
-
-
-	
+console.log('hello');
 });
