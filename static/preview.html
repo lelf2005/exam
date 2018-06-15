@@ -1,34 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="lelf">
-    <meta name="keyword" content="">
-    <title>Exam system for Huhu</title>
-    <style>            
-      .editormd-html-preview {
-          width: 90%;
-          margin: 0 auto;
-      }
-      body{
-        font-size: 18px;
-      }
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="lelf">
+  <meta name="keyword" content="">
+  <title>Exam system for Huhu</title>
+  <style>
+    em {
+      color: red
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+    }
+
+    #preview {
+      padding: 0.5em 1em;
+      margin: 1em 1em;
+    }
+
+    pre {
+      padding: 2em 1em;
+      margin: 0 2em 2em 0;
+      border-radius: 1em;
+      line-height: 2em;
+      width: 90%;
+      background: #f5f2f0;
+    }
   </style>
 
-  </head>
-  <body class="app flex-row align-items-center">
-    
-    <div id="exam">
-        <textarea style="display:none;"></textarea>
-    </div>
+</head>
 
-    <script src="vendors/jquery/js/jquery.min.js"></script>
-    <script src="vendors/editormd/editormd.min.js"></script>
-    <script src="vendors/editormd//lib/marked.min.js"></script>
-    <script src="vendors/editormd//lib/prettify.min.js"></script>
-    <script src="js/exam_preview.js"></script>
-      </body>
+<body class="app flex-row align-items-center">
+  <div id="preview"> </div>
+  <div id="exam">
+    <textarea style="display:none;"></textarea>
+  </div>
+
+  <script src="vendors/jquery/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/katex.min.css">
+  <script src="vendors/katex.js"></script>
+  <script src="vendors/editormd/lib/marked.min.js"></script>
+  <script src="js/exam_preview.js"></script>
+</body>
+
 </html>

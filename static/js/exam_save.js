@@ -104,7 +104,7 @@ function getExamInfo(mdeditor){
 
     $('#btn_examgen').click(function () {
         var data = exam_qlist.data();
-        var content = "#<center>"+$("#exam_name").val()+"</center>\n";
+        var content = "# <center>"+$("#exam_name").val()+"</center>\n";
         data.sort(sortId);
         data.each(function (d) {
             content += d.seq+". "+d.item + "\n\n";

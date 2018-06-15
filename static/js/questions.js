@@ -7,10 +7,10 @@ $(document).ready(function () {
             "type": "POST"
         },
         columns: [
-            { data: 'id', title: "编号", width: "5%" },
-            { data: 'item', title: "题目", width: "75%" },
-            { data: 'type', title: "题型", width: "5%" },
-            { data: 'rank', title: "难度", width: "5%" }
+            { data: 'id', title: "编号", width: "6%" },
+            { data: 'item', title: "题目", width: "72%" },
+            { data: 'type', title: "题型", width: "6%" },
+            { data: 'rank', title: "难度", width: "6%" }
         ],
         paging: true,
         searching: true,
@@ -49,7 +49,7 @@ $(document).ready(function () {
     });
 
     question.katexURL = {
-        js: "vendors/katex.min",
+        js: "vendors/katex",
         css: "css/katex.min"
     };
 
@@ -72,7 +72,7 @@ $(document).ready(function () {
     });
 
     answer.katexURL = {
-        js: "vendors/katex.min",
+        js: "vendors/katex",
         css: "css/katex.min"
     };
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
     });
 
     solution.katexURL = {
-        js: "vendors/katex.min",
+        js: "vendors/katex",
         css: "css/katex.min"
     };
 

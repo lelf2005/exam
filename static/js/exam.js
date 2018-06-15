@@ -6,7 +6,7 @@ $(document).ready(function () {
             "type": "POST"
         },
         columns: [
-            { data: 'id', title: "编号", width: "5%" },
+            { data: 'id', title: "编号", width: "6%" },
             { data: 'name', title: "名称", width: "75%" }
         ],
         paging: true,

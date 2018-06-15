@@ -1,4 +1,4 @@
-$(document).ready(function () {
+﻿$(document).ready(function () {
 	var question = editormd("question", {
 		width: "100%",
 		height: 200,
@@ -18,8 +18,9 @@ $(document).ready(function () {
 	});
 
 	question.katexURL = {
-		js: "js/katex.min",
+		js: "vendors/katex",
 		css: "css/katex.min"
 	};
-console.log('hello');
+
+	katex.render(String.raw`\textbf{Ab}`, ktest);
 });
