@@ -68,7 +68,7 @@ router.post('/exam_info*', function (req, res, next) {
             };
 
             qids = row.qids;
-            sql = "select id as seq,id, item,type, rank from questions where id in (" + qids + ") and isdel=0";
+            sql = "select id as seq,id, item,type, rank,answer from questions where id in (" + qids + ") and isdel=0";
             db.all(sql, [], (err, rows) => {
                 if (err) {
                     throw err;

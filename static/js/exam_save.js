@@ -6,11 +6,12 @@ $(document).ready(function () {
         autoWidth: false,
         ordering: true,
         columns: [
-            { data: "seq", title: "序号", width: "5%", className: 'reorder' },
-            { data: "id", title: "编号", width: "5%","orderable": false },
-            { data: "item", title: "内容", width: "80%","orderable": false },
-            { data: "type", title: "类型", width: "5%","orderable": false },
-            { data: "rank", title: "难度", width: "5%","orderable": false }
+            { data: "seq", title: "序号", width: "6%", className: 'reorder' },
+            { data: "id", title: "编号", width: "6%","orderable": false },
+            { data: "item", title: "内容", width: "75%","orderable": false },
+            { data: "type", title: "类型", width: "6%","orderable": false },
+            { data: "rank", title: "难度", width: "6%","orderable": false },
+            { data: 'answer', title: "答案", width: "1%","orderable": false,"visible":false }
         ],
         rowReorder: {
             dataSrc: 'seq'
@@ -107,7 +108,7 @@ function getExamInfo(mdeditor){
         var content = "# <center>"+$("#exam_name").val()+"</center>\n";
         data.sort(sortId);
         data.each(function (d) {
-            content += d.seq+". "+d.item + "\n\n";
+            content += d.seq+". "+d.item + "\n"+"答案: "+d.answer+"\n\n";
         });
         exam.setMarkdown(content);
     });
@@ -124,9 +125,10 @@ function getExamInfo(mdeditor){
         },
         columns: [
             { data: 'id', title: "编号", width: "8%" },
-            { data: 'item', title: "题目", width: "76%" },
+            { data: 'item', title: "题目", width: "68%" },
             { data: 'type', title: "题型", width: "8%" },
-            { data: 'rank', title: "难度", width: "8%" }
+            { data: 'rank', title: "难度1", width: "8%" },
+            { data: 'answer', title: "答案", width: "1%",visible:false }
         ],
         paging: true,
         searching: true,
@@ -135,24 +137,16 @@ function getExamInfo(mdeditor){
         lengthChange: true,
         //"dom": '<"top"i>rt<"bottom"lp><"clear">',
         columnDefs: [{
-            targets: 4,
+            targets: 5,
             render: function (data, type, row, meta) {
                 var html = '<button type="button" class="btn btn-sm btn-outline-primary btn_add">加入</button>';
                 return html;
             }
         },
-        { "orderable": false, "targets": 4 },
+        { "orderable": false, "targets": 5 },
         ],
         createdRow: function (row, data, index) {
-            if (data["type"] == 1) {
-                $('td:eq(2)', row).html('填空');
-            } else if (data["type"] == 2) {
-                $('td:eq(2)', row).html('选择');
-            } else if (data["type"] == 3) {
-                $('td:eq(2)', row).html('判断');
-            } else if (data["type"] == 4) {
-                $('td:eq(2)', row).html('解答');
-            }
+           
         }
     });
 

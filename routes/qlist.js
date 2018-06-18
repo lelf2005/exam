@@ -13,10 +13,9 @@ router.post('/qlist*', function (req, res, next) {
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
     });
-
-    var sql = 'SELECT id,item,type,rank FROM questions where isdel=0';
+    //sql = 'SELECT group_concat( tag ) as tags FROM tags WHERE qid= ?';
+    var sql = 'SELECT id,item,type,rank,answer FROM questions where isdel=0';
 
     db.all(sql, [], (err, rows) => {
         if (err) {
@@ -56,7 +55,6 @@ router.post('/qadd*', function (req, res, next) {
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
     });
 
     var sql = 'INSERT INTO questions (item, answer,solution,rank,type,created_by,created_time,updated_by,updated_time) VALUES(?,?,?,?,?,?,?,?,?)';
@@ -79,7 +77,7 @@ router.post('/qadd*', function (req, res, next) {
                     if (err) {
                         console.error(err.message);
                     }
-                    console.log(`Rows inserted ${this.changes}`);
+                    //console.log(`Rows inserted ${this.changes}`);
                 });
             }
 
@@ -119,7 +117,6 @@ router.post('/qupdate*', function (req, res, next) {
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
     });
 
     var sql = 'update questions set item = ?,answer=?,solution=?,rank=?,type=?,updated_by=?,updated_time=? where id=?'
@@ -143,7 +140,7 @@ router.post('/qupdate*', function (req, res, next) {
                     if (err) {
                         console.error(err.message);
                     }
-                    console.log(`Rows inserted ${this.changes}`);
+                   // console.log(`Rows updated ${this.changes}`);
                 });
             }
 
@@ -179,7 +176,6 @@ router.post('/qdel*', function (req, res, next) {
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
     });
 
     var sql = 'update questions set isdel = 1 where id=?';
@@ -225,7 +221,6 @@ router.post('/qinfo*', function (req, res, next) {
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
     });
 
     var sql = 'SELECT * FROM questions where isdel=0 and id=?';
@@ -281,7 +276,6 @@ router.get('/tags*', function (req, res, next) {
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
     });
 
     var sql = 'select id, tag as text from tags group by tag';

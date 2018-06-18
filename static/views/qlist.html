@@ -1,0 +1,161 @@
+<link rel="stylesheet" href="css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="css/bootstrap-markdown.min.css">
+<link rel="stylesheet" href="css/katex.min.css">
+<link rel="stylesheet" href="css/select2.min.css" />
+<link rel="stylesheet" href="css/jquery.fileupload.css">
+<script src="vendors/datatables.min.js"></script>
+<script src="vendors/DataTablesBS4.js"></script>
+<script src="vendors/select2.min.js"></script>
+<script src="vendors/katex.js"></script>
+<script src="vendors/bootstrap-markdown.js"></script>
+<script src="vendors/editormd/lib/marked.min.js"></script>
+<script src="vendors/jquery.ui.widget.js"></script>
+<script src="vendors/jquery.iframe-transport.js"></script>
+<script src="vendors/jquery.fileupload.js"></script>
+
+<script src="js/qlist.js"></script>
+
+
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> 题目列表
+          <span class=" float-right">
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#qadd" id="btn_qadd">添加</button>
+          </span>
+        </div>
+        <div class="card-body">
+          <table class="table table-responsive-sm table-bordered table-striped table-sm compact no-footer" id="qlist" style="border-collapse: collapse !important">
+          </table>
+        </div>
+        <div class="card-footer p-4">
+
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+
+<div class="modal fade" id="qadd" tabindex="-1" role="dialog" aria-labelledby="添加题目" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width:1000px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">添加题目</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <div class="form-group col-sm-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">*题型</span>
+              </div>
+              <div>
+                <select id="qtype" name="qtype" class="form-control">
+                  <option value="填空">填空</option>
+                  <option value="选择">选择</option>
+                  <option value="判断">判断</option>
+                  <option value="解答">解答</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">*难度</span>
+              </div>
+              <div>
+                <select id="qrank" name="qrank" class="form-control">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <ul class="nav nav-pills mb-1" id="pills-tab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-q" role="tab" aria-controls="pills-home" aria-selected="true">题目</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-a" role="tab" aria-controls="pills-profile" aria-selected="false">答案</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-s" role="tab" aria-controls="pills-contact" aria-selected="false">解析</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-q" role="tabpanel" aria-labelledby="pills-home-tab">
+                <textarea class="form-control" id="question" rows="10" data-provide="markdown"></textarea>
+              </div>
+              <div class="tab-pane fade" id="pills-a" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <textarea class="form-control" id="answer" rows="10" data-provide="markdown"></textarea>
+              </div>
+              <div class="tab-pane fade" id="pills-s" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <textarea class="form-control" id="solution" rows="10" data-provide="markdown"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <select class="form-control tags" multiple="multiple"></select>
+        <input type="hidden" id="qid" name="qid" class="form-control">
+        <span class="btn btn-success fileinput-button" style="visibility: hidden;">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span>Select files...</span>
+          <!-- The file input field used as target for the file upload widget -->
+          <input id="fileupload" type="file" name="files[]"  multiple>
+      </span>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" id="qsave">保存</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>
+
+<div class="modal fade" id="confirmdel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">删除题目</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>点击确认删除题目!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-danger" id="qdel">确认</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

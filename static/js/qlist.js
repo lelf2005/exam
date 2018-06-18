@@ -30,74 +30,13 @@ $(document).ready(function () {
         ]
     });
 
-    var question = editormd("question", {
-        width: "100%",
-        height: 200,
-        delay: 600,
-        //autoHeight: true,
-        //syncScrolling: "single",
-        watch: false,
-        //placeholder: "type here",
-        path: "vendors/editormd/lib/",
-        tex: true,
-        imageUpload: true,
-        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        imageUploadURL: "/upload/fileUpload",
-        toolbarIcons: function () {
-            return ["undo", "redo", "image", "watch"]
-        }
-    });
+    marked.setOptions({
+		gfm: true,
+		breaks: true,
+		latexRender: katex.renderToString.bind(katex)
+	});
 
-    question.katexURL = {
-        js: "vendors/katex",
-        css: "css/katex.min"
-    };
-
-    var answer = editormd("answer", {
-        width: "100%",
-        height: 150,
-        delay: 600,
-        //autoHeight: true,
-        syncScrolling: "single",
-        watch: false,
-        placeholder: "type here",
-        path: "vendors/editormd/lib/",
-        tex: true,
-        imageUpload: true,
-        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        imageUploadURL: "/upload/fileUpload",
-        toolbarIcons: function () {
-            return ["undo", "redo", "image", "watch"]
-        }
-    });
-
-    answer.katexURL = {
-        js: "vendors/katex",
-        css: "css/katex.min"
-    };
-
-    var solution = editormd("solution", {
-        width: "100%",
-        height: 200,
-        delay: 600,
-        //autoHeight: true,
-        syncScrolling: "single",
-        watch: false,
-        placeholder: "type here",
-        path: "vendors/editormd/lib/",
-        tex: true,
-        imageUpload: true,
-        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        imageUploadURL: "/upload/fileUpload",
-        toolbarIcons: function () {
-            return ["undo", "redo", "image", "watch"]
-        }
-    });
-
-    solution.katexURL = {
-        js: "vendors/katex",
-        css: "css/katex.min"
-    };
+    
 
     var qtype = $("#qtype");
     var qrank = $("#qrank");
@@ -106,12 +45,11 @@ $(document).ready(function () {
     var qadd = $("#qadd");
     var btn_qadd = $("#btn_qadd");
     var qdel = $("#qdel");
+    var question = $("#question");
+    var answer = $("#answer");
+    var solution = $("#solution");
 
-    qadd.on('shown.bs.modal', function () {
-        $(window).resize();
-        question.setCursor({ line: 0, ch: 0 });
-        //question.setMarkdown("### hello");
-    })
+
 
     btn_qadd.click(function () {
         qid.val("");
@@ -131,9 +69,9 @@ $(document).ready(function () {
         if (qid.val() == "") {
             qtype.val(1);
             qrank.val(1);
-            question.setMarkdown("");
-            answer.setMarkdown("");
-            solution.setMarkdown("");
+            question.val("");
+            answer.val("");
+            solution.val("");
         } else {
             var post_url = "/qlist/qinfo";
 
@@ -150,9 +88,9 @@ $(document).ready(function () {
                     if (dataJson.code == 200) {
                         qtype.val(dataJson.qtype);
                         qrank.val(dataJson.qrank);
-                        question.setMarkdown(dataJson.item);
-                        answer.setMarkdown(dataJson.answer);
-                        solution.setMarkdown(dataJson.solution);
+                        question.val(dataJson.item);
+                        answer.val(dataJson.answer);
+                        solution.val(dataJson.solution);
                         var ret_tags = dataJson.tags;
                         tag_select.val(null).trigger('change');
                         for(var i=0;i<ret_tags.tags.length;i++){
@@ -174,7 +112,7 @@ $(document).ready(function () {
     });
 
     qsave.click(function () {
-        if (qtype.val() == null || qrank.val() == "" || question.getMarkdown() == "" || answer.getMarkdown() == "") {
+        if (qtype.val() == null || qrank.val() == "" || question.val() == "" || answer.val() == "") {
             alert("有*字段不能为空！");
         } else {
             var post_url = "/qlist/qadd";
@@ -193,9 +131,9 @@ $(document).ready(function () {
                     qtype: qtype.val(),
                     qrank: qrank.val(),
                     qid: qid.val(),
-                    question: question.getMarkdown(),
-                    answer: answer.getMarkdown(),
-                    solution: solution.getMarkdown(),
+                    question: question.val(),
+                    answer: answer.val(),
+                    solution: solution.val(),
                     tags: tags.substring(1, tags.length)
                 },
                 type: "POST",
@@ -258,7 +196,7 @@ $(document).ready(function () {
         width: "100%",
         ajax: {
             url: '/qlist/tags',
-            delay: 1000,
+            delay: 250,
             dataType: 'json'
         }
     });
