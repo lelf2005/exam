@@ -15,7 +15,8 @@ router.post('/qlist*', function (req, res, next) {
         }
     });
     //sql = 'SELECT group_concat( tag ) as tags FROM tags WHERE qid= ?';
-    var sql = 'SELECT id,item,type,rank,answer FROM questions where isdel=0';
+    //var sql = 'SELECT id,item,type,rank,answer FROM questions where isdel=0';
+    var sql = 'SELECT id,item,type,rank,answer,t.tags as tags FROM questions as q  left join (SELECT qid,group_concat( tag ) as tags  FROM tags  group by qid) as t on  t.qid=q.id where  q.isdel=0';
 
     db.all(sql, [], (err, rows) => {
         if (err) {

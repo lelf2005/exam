@@ -10,7 +10,8 @@ $(document).ready(function () {
             { data: 'id', title: "编号", width: "6%" },
             { data: 'item', title: "题目", width: "70%" },
             { data: 'type', title: "题型", width: "6%" },
-            { data: 'rank', title: "难度", width: "6%" }
+            { data: 'rank', title: "难度", width: "6%" },
+            { data: 'tags', title: "难度", width: "1%", "visible":false  }
         ],
         paging: true,
         searching: true,
@@ -19,14 +20,14 @@ $(document).ready(function () {
         lengthChange: true,
         //"dom": '<"top"i>rt<"bottom"lp><"clear">',
         columnDefs: [{
-            targets: 4,
+            targets: 5,
             render: function (data, type, row, meta) {
                 var html = '<button type="button" class="btn btn-sm btn-outline-primary btn_update" data-toggle="modal" data-target="#qadd">修改</button>';
                 html += ' <button type="button" class="btn btn-sm btn-outline-danger btn_del" data-toggle="modal" data-target="#confirmdel">删除</button>';
                 return html;
             }
         },
-        { "orderable": false, "targets": 4 },
+        { "orderable": false, "targets": 5 },
         ]
     });
 

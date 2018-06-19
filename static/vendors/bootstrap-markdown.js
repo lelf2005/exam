@@ -1401,8 +1401,8 @@
           title: 'Quote',
           icon: {
             glyph: 'glyphicon glyphicon-comment',
-            fa: 'fa fa-quote-left',
-            'fa-3': 'icon-quote-left',
+            fa: 'fa fa-underline',
+            'fa-3': 'icon-underline',
             octicons: 'octicon octicon-quote'
           },
           callback: function(e) {
@@ -1410,8 +1410,10 @@
             var chunk, cursor, selected = e.getSelection(),
               content = e.getContent();
 
+              e.replaceSelection('\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_');
+
             // transform selection and set the cursor into chunked text
-            if (selected.length === 0) {
+            /*if (selected.length === 0) {
               // Give extra word
               chunk = e.__localize('quote here');
 
@@ -1442,7 +1444,7 @@
                 // Set the cursor
                 cursor = selected.start + 4;
               }
-            }
+            }*/
 
             // Set the cursor
             e.setSelection(cursor, cursor + chunk.length);
