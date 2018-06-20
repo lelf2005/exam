@@ -46,11 +46,12 @@
     <div class="sidebar">
       <nav class="sidebar-nav">
         <ul class="nav">
-          <li class="nav-item invisible">
-            <a class="nav-link" href="questions_list.html">
-              <i class="nav-icon icon-speedometer"></i> 题目列表
+          <li class="nav-item">
+            <a class="nav-link active" href="dashboard.html">
+              <i class="nav-icon icon-speedometer"></i> Dashboard
             </a>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="qlist.html">
               <i class="nav-icon icon-list"></i> 题目列表
@@ -66,7 +67,12 @@
               <i class="nav-icon icon-speedometer"></i> Editor
             </a>
           </li>
-          <li class="nav-item">
+
+          <li class="nav-item"><li class="nav-item invisible">
+            <a class="nav-link" href="questions_list.html">
+              <i class="nav-icon icon-speedometer"></i> 题目列表
+            </a>
+          </li>
             <a class="nav-link invisible" href="exam_save.html" id="exam_edit">
               <i class="nav-icon icon-speedometer"></i> 试卷编辑
             </a>
@@ -89,7 +95,7 @@
     <div class="ml-auto">
       <span>Powered by lelf</span>
     </div>
-    <input type="hidden" id="exam_id" name="exam_id" class="form-control" >
+    <input type="hidden" id="exam_id" name="exam_id" class="form-control">
   </footer>
   <!-- Bootstrap and necessary plugins-->
   <script src="vendors/jquery/js/jquery.min.js"></script>
