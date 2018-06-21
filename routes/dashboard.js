@@ -46,4 +46,44 @@ router.post('/count*', function (req, res, next) {
 
 });
 
+router.post('/qtypecount*', function (req, res, next) {
+    if (!req.session.username) {
+        result = {
+            code: 400,
+            msg: '登录超时'
+        };
+        res.json(result);
+        return;
+    }
+   
+
+    var db = new sqlite3.Database(config.db_path, sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+    });
+
+    var sql = 'select type, count(type) as c from questions where isdel=0 group by type';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        } else {
+            result = {
+                code: 200,
+                msg: '查询成功',
+            };
+            result["data"] = rows;
+            res.json(result);
+        }
+    });
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+    });
+
+});
+
 module.exports = router;
